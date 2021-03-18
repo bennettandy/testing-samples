@@ -8,6 +8,19 @@ pipeline {
     GOOGLE_SERVICES_JSON = credentials('google-services-json')
   }
   stages{
+    stage('Setup parameters') {
+      steps {
+        script {
+          properties([
+                  parameters([
+                          choice(
+                                  choices: ['AndroidJunitRunnerSample', 'runner/AndroidJUnitRunnerSample/'],
+                                  name: 'TEST_ROOT'
+                          )])
+          ])
+        }
+      }
+    }
     stage('Emulator'){
       steps{
         echo "Pull Emulator Docker Image"
